@@ -30,12 +30,17 @@ app.use(limiter);
 
 // CORS configuration
 app.use(cors({
-  origin: [process.env.FRONTEND_URL || 'http://localhost:5173', 'http://localhost:3000'],
+  origin: [
+    process.env.FRONTEND_URL || 'http://localhost:5173',
+    'http://localhost:3000',
+    'https://article.sahilfolio.live'
+  ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Timezone'],
   exposedHeaders: ['Content-Length', 'X-Total-Count']
 }));
+
 
 // Body parser middleware
 app.use(express.json({ limit: '10mb' }));
