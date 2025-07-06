@@ -145,6 +145,10 @@ export const usersAPI = {
   
   // Follow/unfollow user
   followUser: (userId) => api.post(`/users/${userId}/follow`),
+  unfollowUser: (userId) => api.post(`/users/${userId}/follow`), // Changed to POST since backend handles both follow/unfollow
+  
+  // Get follow status
+  getFollowStatus: (userId) => api.get(`/users/${userId}/follow-status`),
   
   // Get user followers
   getUserFollowers: (userId, params = {}) => api.get(`/users/${userId}/followers`, { params }),

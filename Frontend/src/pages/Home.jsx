@@ -132,6 +132,15 @@ const Home = () => {
               const excerpt = truncateText(plainTextContent, 160);
               const isFirstArticle = index === 0;
 
+              // Debug: Check if author has username
+              if (article.author) {
+                console.log('Article author:', {
+                  name: article.author.name,
+                  username: article.author.username,
+                  id: article.author._id
+                });
+              }
+
               return (
                 <article 
                   key={article._id} 
@@ -159,27 +168,31 @@ const Home = () => {
                       (article.featuredImage?.url || article.featuredImage) 
                         ? (isFirstArticle ? 'order-1 md:order-2' : 'md:col-span-2') 
                         : (isFirstArticle ? 'md:col-span-2' : 'md:col-span-3')
-                    }`}>                    {/* Author and metadata */}
-                    <div className="flex items-center mb-4">
-                      <div className="w-10 h-10 mr-3 overflow-hidden rounded-full">
-                        {article.author?.avatar ? (
-                          <img 
-                            src={article.author.avatar} 
-                            alt={article.author.name || 'Author'}
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <div className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                            <span className="text-sm font-semibold text-white">
-                              {article.author?.name?.charAt(0)?.toUpperCase() || 'A'}
-                            </span>
-                          </div>
-                        )}
-                      </div>
+                    }`}>
+                      {/* Author and metadata */}
+                      <div className="flex items-center mb-4">
+                        <Link 
+                          to={article.author?.username ? `/user/${article.author.username}` : '#'}
+                          className="w-10 h-10 mr-3 overflow-hidden rounded-full hover:opacity-80 transition-opacity"
+                        >
+                          {article.author?.avatar ? (
+                            <img 
+                              src={article.author.avatar} 
+                              alt={article.author.name || 'Author'}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                              <span className="text-sm font-semibold text-white">
+                                {article.author?.name?.charAt(0)?.toUpperCase() || 'A'}
+                              </span>
+                            </div>
+                          )}
+                        </Link>
                         <div>
                           <Link 
                             to={article.author?.username ? `/user/${article.author.username}` : '#'}
-                            className="font-medium text-gray-900 hover:text-blue-600 transition-colors"
+                            className="font-medium text-gray-900 hover:text-blue-600 transition-colors cursor-pointer"
                           >
                             {article.author?.name || 'Anonymous'}
                           </Link>

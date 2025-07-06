@@ -62,6 +62,16 @@ const Navigation = () => {
                   Write
                 </Link>
                 <Link 
+                  to="/test-follow" 
+                  className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 ${
+                    isActivePath('/test-follow') 
+                      ? 'bg-green-100 text-green-900' 
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                  }`}
+                >
+                  Test Follow
+                </Link>
+                <Link 
                   to="/dashboard" 
                   className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 ${
                     isActivePath('/dashboard') 

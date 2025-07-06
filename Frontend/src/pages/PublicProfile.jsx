@@ -3,6 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { usersAPI } from '../utils/api';
 import { formatDate } from '../utils/helpers';
 import SEOHead from '../components/SEOHead';
+import FollowButton from '../components/FollowButton';
+import FollowModal from '../components/FollowModal';
 import { 
   User, 
   Calendar, 
@@ -26,6 +28,8 @@ const PublicProfile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [articlesLoading, setArticlesLoading] = useState(false);
+  const [showFollowModal, setShowFollowModal] = useState(false);
+  const [followModalTab, setFollowModalTab] = useState('followers');
 
   useEffect(() => {
     if (username) {
@@ -250,6 +254,24 @@ const PublicProfile = () => {
                 )}
               </div>
             )}
+
+            {/* Follow Button */}
+            <div className="mt-6">
+              <FollowButton
+                userId={profile?._id}
+                userName={profile?.name}
+                onFollowChange={(isFollowing) => {
+                  // Update local follow counts if needed
+                  setProfile(prev => prev ? {
+                    ...prev,
+                    followersCount: isFollowing 
+                      ? (prev.followersCount || 0) + 1 
+                      : Math.max((prev.followersCount || 0) - 1, 0)
+                  } : null);
+                }}
+                className="px-6 py-3 text-sm font-medium"
+              />
+            </div>
           </div>
         </div>
 
@@ -267,7 +289,13 @@ const PublicProfile = () => {
                   Articles Published
                 </div>
               </div>
-              <div className="text-center p-6 bg-green-50 rounded-xl">
+              <button 
+                onClick={() => {
+                  setFollowModalTab('followers');
+                  setShowFollowModal(true);
+                }}
+                className="text-center p-6 bg-green-50 rounded-xl hover:bg-green-100 transition-colors cursor-pointer w-full"
+              >
                 <div className="text-3xl font-bold text-green-600 mb-2">
                   {profile?.followersCount || 0}
                 </div>
@@ -275,8 +303,14 @@ const PublicProfile = () => {
                   <Users className="w-4 h-4 mr-1" />
                   Followers
                 </div>
-              </div>
-              <div className="text-center p-6 bg-purple-50 rounded-xl">
+              </button>
+              <button 
+                onClick={() => {
+                  setFollowModalTab('following');
+                  setShowFollowModal(true);
+                }}
+                className="text-center p-6 bg-purple-50 rounded-xl hover:bg-purple-100 transition-colors cursor-pointer w-full"
+              >
                 <div className="text-3xl font-bold text-purple-600 mb-2">
                   {profile?.followingCount || 0}
                 </div>
@@ -284,7 +318,7 @@ const PublicProfile = () => {
                   <Heart className="w-4 h-4 mr-1" />
                   Following
                 </div>
-              </div>
+              </button>
             </div>
           </div>
         </div>
@@ -346,6 +380,15 @@ const PublicProfile = () => {
           </div>
         </div>
       </div>
+      
+      {/* Follow Modal */}
+      <FollowModal
+        isOpen={showFollowModal}
+        onClose={() => setShowFollowModal(false)}
+        userId={profile?._id}
+        userName={profile?.name}
+        initialTab={followModalTab}
+      />
     </div>
     </>
   );
