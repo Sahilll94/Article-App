@@ -77,7 +77,7 @@ router.get('/', optionalAuth, async (req, res) => {
 
     // Get articles
     const articles = await Article.find(query)
-      .populate('author', 'name email avatar bio')
+      .populate('author', 'name email avatar bio username')
       .sort(sortOptions)
       .skip(pagination.skip)
       .limit(pagination.itemsPerPage)
@@ -129,7 +129,7 @@ router.get('/my-articles', auth, async (req, res) => {
 
     // Get articles
     const articles = await Article.find(query)
-      .populate('author', 'name email avatar')
+      .populate('author', 'name email avatar username')
       .sort(sortOptions)
       .skip(pagination.skip)
       .limit(pagination.itemsPerPage);
@@ -176,9 +176,9 @@ router.get('/:slug', optionalAuth, async (req, res) => {
     }
 
     const article = await Article.findOne(query)
-      .populate('author', 'name email avatar bio socialLinks')
-      .populate('comments.user', 'name avatar')
-      .populate('likes.user', 'name avatar');
+      .populate('author', 'name email avatar bio socialLinks username')
+      .populate('comments.user', 'name avatar username')
+      .populate('likes.user', 'name avatar username');
 
     if (!article) {
       return res.status(404).json(
@@ -279,7 +279,7 @@ router.post('/', auth, validateArticleCreate, async (req, res) => {
     await User.findByIdAndUpdate(req.user.id, { $inc: { articlesCount: 1 } });
 
     // Populate author info
-    await article.populate('author', 'name email avatar');
+    await article.populate('author', 'name email avatar username');
 
     res.status(201).json(
       formatSuccessResponse('Article created successfully', article, null, req.timezone)
@@ -365,7 +365,7 @@ router.put('/:id', auth, validateArticleUpdate, async (req, res) => {
       id,
       updateData,
       { new: true, runValidators: true }
-    ).populate('author', 'name email avatar');
+    ).populate('author', 'name email avatar username');
 
     res.json(
       formatSuccessResponse('Article updated successfully', updatedArticle, null, req.timezone)
@@ -689,9 +689,9 @@ router.get('/:slug/render', optionalAuth, async (req, res) => {
     }
 
     const article = await Article.findOne(query)
-      .populate('author', 'name email avatar bio socialLinks')
-      .populate('comments.user', 'name avatar')
-      .populate('likes.user', 'name avatar');
+      .populate('author', 'name email avatar bio socialLinks username')
+      .populate('comments.user', 'name avatar username')
+      .populate('likes.user', 'name avatar username');
 
     if (!article) {
       return res.status(404).json(
