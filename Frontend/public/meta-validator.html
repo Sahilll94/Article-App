@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meta Tags Validator - Article App</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 800px; 
+            margin: 20px auto; 
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .test-section { 
+            background: #f5f5f5; 
+            padding: 15px; 
+            margin: 15px 0; 
+            border-left: 4px solid #2563eb; 
+        }
+        .success { border-left-color: #10b981; }
+        .warning { border-left-color: #f59e0b; }
+        .error { border-left-color: #ef4444; }
+        code { 
+            background: #e5e7eb; 
+            padding: 2px 6px; 
+            border-radius: 3px; 
+            font-family: monospace;
+        }
+        .preview {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            background: white;
+        }
+        .preview-title {
+            font-weight: bold;
+            color: #1d4ed8;
+            margin-bottom: 5px;
+        }
+        .preview-desc {
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+        .preview-url {
+            color: #059669;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Meta Tags Validator for Article App</h1>
+    
+    <div class="test-section success">
+        <h2>✅ What's Working</h2>
+        <p>Your Article App now has comprehensive meta tags including:</p>
+        <ul>
+            <li><strong>Open Graph tags</strong> for Facebook, WhatsApp, LinkedIn</li>
+            <li><strong>Twitter Card tags</strong> for Twitter</li>
+            <li><strong>Schema.org JSON-LD</strong> for rich snippets</li>
+            <li><strong>SEO-friendly meta tags</strong> for search engines</li>
+        </ul>
+    </div>
+
+    <div class="test-section">
+        <h2>📱 Expected Social Media Preview</h2>
+        <div class="preview">
+            <div class="preview-title">Travel Book - Where Adventures are Preserved | Article App</div>
+            <div class="preview-desc">Test article about travel adventures and how they are preserved in books. This is a comprehensive guide to documenting your travel experiences...</div>
+            <div class="preview-url">localhost:5173/article/travel-book-where-adventures-are-preserved-140511</div>
+            <div style="margin-top: 10px; padding: 10px; background: #f3f4f6; border-radius: 4px;">
+                📸 Featured image (if available) or default Article App logo
+            </div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>🧪 Testing Steps</h2>
+        <ol>
+            <li><strong>WhatsApp Test:</strong> Share the article URL in WhatsApp chat</li>
+            <li><strong>Twitter Test:</strong> Tweet the article URL</li>
+            <li><strong>Facebook Test:</strong> Post the article URL on Facebook</li>
+            <li><strong>LinkedIn Test:</strong> Share the article URL on LinkedIn</li>
+            <li><strong>Meta Debugger:</strong> Use <a href="https://developers.facebook.com/tools/debug/" target="_blank">Facebook's Sharing Debugger</a></li>
+            <li><strong>Twitter Validator:</strong> Use <a href="https://cards-dev.twitter.com/validator" target="_blank">Twitter Card Validator</a></li>
+        </ol>
+    </div>
+
+    <div class="test-section">
+        <h2>🔗 Test URLs</h2>
+        <p>Try sharing these URLs:</p>
+        <ul>
+            <li><a href="http://localhost:5173/article/travel-book-where-adventures-are-preserved-140511" target="_blank">Sample Article</a></li>
+            <li><a href="http://localhost:5173/user/johndoe" target="_blank">Sample Public Profile</a></li>
+            <li><a href="http://localhost:5173/" target="_blank">Homepage</a></li>
+        </ul>
+    </div>
+
+    <div class="test-section warning">
+        <h2>⚠️ Important Notes</h2>
+        <ul>
+            <li><strong>Local Development:</strong> Social media platforms can't access localhost URLs. For testing, you'll need to deploy to a public URL.</li>
+            <li><strong>Image Requirements:</strong> Images should be at least 1200x630px for best results</li>
+            <li><strong>Description Length:</strong> Keep descriptions between 150-300 characters</li>
+            <li><strong>Cache:</strong> Social platforms cache meta data. Use their debugging tools to refresh.</li>
+        </ul>
+    </div>
+
+    <div class="test-section">
+        <h2>🚀 Production Deployment</h2>
+        <p>For full testing, deploy your app to:</p>
+        <ul>
+            <li>Vercel, Netlify, or similar platform</li>
+            <li>Your own domain</li>
+            <li>Any publicly accessible URL</li>
+        </ul>
+    </div>
+
+    <script>
+        // Simple meta tag checker
+        function checkMetaTags() {
+            const requiredTags = [
+                'og:title',
+                'og:description', 
+                'og:image',
+                'og:url',
+                'twitter:card',
+                'twitter:title',
+                'twitter:description',
+                'twitter:image'
+            ];
+            
+            const results = [];
+            requiredTags.forEach(tag => {
+                const element = document.querySelector(`meta[property="${tag}"], meta[name="${tag}"]`);
+                results.push({
+                    tag: tag,
+                    found: !!element,
+                    content: element ? element.content : null
+                });
+            });
+            
+            console.log('Meta Tags Check:', results);
+            return results;
+        }
+        
+        // Run check when page loads
+        document.addEventListener('DOMContentLoaded', checkMetaTags);
+    </script>
+</body>
+</html>
