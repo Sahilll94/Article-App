@@ -14,7 +14,6 @@ import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import PublicProfile from './pages/PublicProfile';
 import Preview from './pages/Preview';
-import TestFollow from './pages/TestFollow';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -59,8 +58,6 @@ function App() {
                   <Route path="/user/:username" element={<PublicProfile />} />
                   {/* Preview route */}
                   <Route path="/preview" element={<Preview />} />
-                  {/* Test Follow functionality */}
-                  <Route path="/test-follow" element={<TestFollow />} />
                   {/* 404 Page */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
