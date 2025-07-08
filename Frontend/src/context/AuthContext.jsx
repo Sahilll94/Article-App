@@ -125,7 +125,6 @@ export const AuthProvider = ({ children }) => {
         throw new Error('Invalid response from server');
       }
     } catch (error) {
-      config.debug('Google sign-in error:', error);
       const errorMessage = error.response?.data?.message || error.message || 'Google sign-in failed';
       dispatch({
         type: 'LOGIN_FAILURE',

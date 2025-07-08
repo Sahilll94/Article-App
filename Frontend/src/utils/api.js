@@ -36,8 +36,10 @@ api.interceptors.response.use(
       window.location.href = '/login';
     }
     
-    // Log API errors for debugging
-    config.debug(`API Error: ${error.config?.method?.toUpperCase()} ${error.config?.url} - ${error.response?.status} ${error.response?.statusText}`);
+    // Only log errors in development (no sensitive URLs)
+    if (config.isDevelopment()) {
+      console.error('API Error:', error.response?.status || 'Network Error');
+    }
     
     return Promise.reject(error);
   }

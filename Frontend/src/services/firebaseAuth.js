@@ -16,8 +16,6 @@ export class FirebaseAuthService {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
       
-      config.debug('Google sign-in successful:', user.email);
-      
       return {
         success: true,
         user: {
@@ -30,7 +28,6 @@ export class FirebaseAuthService {
         idToken: await user.getIdToken()
       };
     } catch (error) {
-      config.debug('Google sign-in error:', error);
       
       let message = 'Failed to sign in with Google';
       
@@ -64,8 +61,6 @@ export class FirebaseAuthService {
       const result = await signInWithEmailAndPassword(auth, email, password);
       const user = result.user;
       
-      config.debug('Email sign-in successful:', user.email);
-      
       return {
         success: true,
         user: {
@@ -78,7 +73,6 @@ export class FirebaseAuthService {
         idToken: await user.getIdToken()
       };
     } catch (error) {
-      config.debug('Email sign-in error:', error);
       
       let message = 'Failed to sign in';
       
@@ -117,8 +111,6 @@ export class FirebaseAuthService {
         });
       }
       
-      config.debug('Account creation successful:', user.email);
-      
       return {
         success: true,
         user: {
@@ -131,7 +123,6 @@ export class FirebaseAuthService {
         idToken: await user.getIdToken()
       };
     } catch (error) {
-      config.debug('Account creation error:', error);
       
       let message = 'Failed to create account';
       
@@ -160,13 +151,11 @@ export class FirebaseAuthService {
   static async signOut() {
     try {
       await signOut(auth);
-      config.debug('Sign-out successful');
       
       return {
         success: true
       };
     } catch (error) {
-      config.debug('Sign-out error:', error);
       
       return {
         success: false,
